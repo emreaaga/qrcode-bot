@@ -1,5 +1,6 @@
 import telebot
 from fn import generate_qr
+from telebot import types
 
 API_TOKEN = '6919402927:AAFjZDcCGDliYEKTlHStPgUeDbful12aoqw'
 
@@ -17,13 +18,13 @@ def send_help(message):
 
 
 @bot.message_handler(commands=['settings'])
-def change_settings(messsage):
+def change_settings(message):
     pass
 
 
 @bot.message_handler(content_types=['text'])
 def send_link_qr(message):
-    qr_code = generate_qr(message)
+    qr_code = generate_qr(message.text)
     bot.send_photo(message.chat.id, qr_code)
 
 
@@ -31,7 +32,19 @@ def send_link_qr(message):
 def send_location_qr(message):
     latitude = message.location.latitude
     longitude = message.location.longitude
-    qr_code = generate_qr(message, latitude, longitude)
+    qr_code = generate_qr(message.text, latitude, longitude)
+    bot.send_photo(message.chat.id, qr_code)
+
+
+@bot.message_handler(content_types=['contact'])
+def send_contact_qr(message):
+    qr_code = generate_qr(message.contact.phone_number)
+    bot.send_photo(message.chat.id, qr_code)
+
+
+@bot.message_handler(content_types=['photo'])
+def send_photo_qr(message):
+    qr_code = generate_qr(None, photo=message)
     bot.send_photo(message.chat.id, qr_code)
 
 

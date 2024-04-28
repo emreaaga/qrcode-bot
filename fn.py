@@ -2,10 +2,13 @@ import qrcode
 import io
 
 
-def generate_qr(value, latitude=None, longitude=None):
-    if latitude and longitude:
-        location = f'geo:{latitude},{longitude}'
-    data = value.text
+def set_qr_settings():
+    pass
+
+
+
+def generate_qr(value, latitude=None, longitude=None, photo=None):
+    data = value
     qr_bytes_io = io.BytesIO()
 
     qr = qrcode.QRCode(
@@ -14,9 +17,14 @@ def generate_qr(value, latitude=None, longitude=None):
         border=4,
         error_correction=qrcode.constants.ERROR_CORRECT_L
     )
+
     if latitude and longitude:
         location = f'geo:{latitude},{longitude}'
         qr.add_data(location)
+
+    elif photo:
+        pass
+
     else:
         qr.add_data(data)
 
