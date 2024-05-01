@@ -1,7 +1,6 @@
 import qrcode
 import io
 
-
 def generate_qr(value, latitude=None, longitude=None, photo=None, backcolor='white', vr=1):
     data = value
     qr_bytes_io = io.BytesIO()
@@ -30,5 +29,8 @@ def generate_qr(value, latitude=None, longitude=None, photo=None, backcolor='whi
     qr_bytes_io.seek(0)
 
     return qr_bytes_io
+
+
+
 
 
